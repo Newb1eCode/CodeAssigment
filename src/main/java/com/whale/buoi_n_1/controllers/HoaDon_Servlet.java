@@ -80,12 +80,11 @@ public class HoaDon_Servlet extends HttpServlet {
     protected void store(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HoaDon newHoaDon = new HoaDon();
         KhachHang khachHangHoaDon = new KhachHang();
-        String tenKhachHang = null;
-        if (tenKhachHang == null) {
-            khachHangHoaDon.setHoTen("Khach Van Lai");
+        String tenKhachHang = request.getParameter("khachHang");
+        if (tenKhachHang.equals("KhachVangLai")) {
+            khachHangHoaDon.setHoTen(tenKhachHang);
             khachHangHoaDon.setNgayTao(new Date());
             khachHangHoaDon.setNgaySua(new Date());
-
             khRepository.createKhachHang(khachHangHoaDon);
 
             newHoaDon.setKhachHang(khRepository.findById(khachHangHoaDon.getId()));
@@ -93,9 +92,7 @@ public class HoaDon_Servlet extends HttpServlet {
             newHoaDon.setNgayTao(new Date());
             newHoaDon.setNgaySua(new Date());
             hdRepository.createHoaDon(newHoaDon);
-            response.sendRedirect("/ban-hang/index");
         } else {
-            tenKhachHang =  request.getParameter("khachHang");
             khachHangHoaDon.setId(Integer.parseInt(request.getParameter("khachHang")));
             khachHangHoaDon.setHoTen(khRepository.findById(khachHangHoaDon.getId()).getHoTen());
             newHoaDon.setKhachHang(khachHangHoaDon);
@@ -105,8 +102,8 @@ public class HoaDon_Servlet extends HttpServlet {
             newHoaDon.setNgayTao(new Date());
             newHoaDon.setNgaySua(new Date());
             hdRepository.createHoaDon(newHoaDon);
-            response.sendRedirect("/hoa-don/index");
         }
+        response.sendRedirect("/hoa-don/index");
     }
 
     protected void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
