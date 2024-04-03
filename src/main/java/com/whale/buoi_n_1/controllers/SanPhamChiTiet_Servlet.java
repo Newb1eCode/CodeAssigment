@@ -38,7 +38,7 @@ public class SanPhamChiTiet_Servlet extends HttpServlet {
         if (idSp == 0 || idSp == null){
             request.getRequestDispatcher("/views/san_pham/index.jsp").forward(request, response);
         } else {
-            request.setAttribute("listSanPhamChiTiet", repository.findById(idSp));
+            request.setAttribute("listSanPhamChiTiet", repository.findByIdSPAndIdHD(idSp));
             request.getRequestDispatcher("/views/san_pham_chi_tiet/index.jsp").forward(request, response);
         }
     }
