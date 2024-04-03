@@ -26,6 +26,12 @@ public class KhachHang_Repository {
         return value;
     }
 
+    public KhachHang findBySDT(String sdt){
+        String query = "from KhachHang Where sdt = :sdt";
+        KhachHang value = (KhachHang) session.createQuery(query).setParameter("sdt", sdt).getSingleResult();
+        return value;
+    }
+
     public void createKhachHang(KhachHang newKhachHang) {
         try {
             session.getTransaction().begin();
