@@ -16,6 +16,7 @@ import java.util.Date;
 @Table(name = "hdct")
 public class HoaDonChiTiet {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @JoinColumn(name = "id_hoa_don")
@@ -36,4 +37,19 @@ public class HoaDonChiTiet {
     private Date ngayTao;
     @Column(name = " ngay_sua")
     private Date ngaySua;
+
+    @Override
+    public String toString() {
+        return "HoaDonChiTiet{" +
+                "id=" + id +
+                ", hoaDon=" + hoaDon +
+                ", sanPhamChiTiet=" + sanPhamChiTiet +
+                ", soLuongMua=" + soLuongMua +
+                ", giaBan=" + giaBan +
+                ", tongTien=" + tongTien +
+                ", trangThai='" + trangThai + '\'' +
+                ", ngayTao=" + ngayTao +
+                ", ngaySua=" + ngaySua +
+                '}';
+    }
 }
