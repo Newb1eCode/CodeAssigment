@@ -51,7 +51,7 @@
             <%--    Danh Sach Hoa Don Chi Tiet--%>
             <%--    --------------------------------------------------------------------------------------------------------------%>
             <h2>Danh sách hoá đơn chi tiết</h2>
-            <table class="table">
+            <table class="table text-center">
                 <thead>
                 <tr>
                     <td>STT</td>
@@ -60,7 +60,7 @@
                     <td>So luong</td>
                     <td>Gia ban</td>
                     <td>Tong tien</td>
-                    <td>Chuc nang</td>
+                    <td colspan="3">Chuc nang</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,7 +73,9 @@
                         <td>${hdct.giaBan}</td>
                         <td>${hdct.tongTien}</td>
                         <td>
-                            <button class="btn btn-primary">Chon</button>
+                            <a class="btn btn-primary" href="/ban-hang/chinhSuaHDCT?idSPCT=${hdct.id}&action=them&idHD=${hdct.hoaDon.id}">+</a>
+                            <a class="btn btn-primary" href="/ban-hang/chinhSuaHDCT?idSPCT=${hdct.id}&action=giam&idHD=${hdct.hoaDon.id}">-</a>
+                            <a class="btn btn-danger" href="/ban-hang/chinhSuaHDCT?idSPCT=${hdct.id}&action=xoa&idHD=${hdct.hoaDon.id}">Xóa</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -86,17 +88,17 @@
             <%--    --------------------------------------------------------------------------------------------------------------%>
             <h2>Tạo hoá đơn</h2>
             <div>
+            </div>
+            <form action="/ban-hang/taoHoaDon" method="post">
                 <div>
                     <label class="mb-3 col-3">Số điện thoại</label>
-                    <input type="text" class="col-7" value="${hoaDonByID.soDienThoai}">
+                    <input type="text" class="col-7" value="${hoaDonByID.soDienThoai}" name="sdt">
                 </div>
-                <button class="btn btn-primary">Search</button>
-            </div>
-            <form action="/hoa-don/store" method="post">
+                <a class="btn btn-primary mb-3" href="/ban-hang/searchSDT">Search</a>
                 <div class="row">
                     <div class="mb-3">
                         <label class="col-3">Ten Khach hang</label>
-                        <input type="text" class="col-7" readonly value="${hoaDonByID.khachHang.hoTen}">
+                        <input type="text" class="col-7" readonly value="${hoaDonByID.khachHang.hoTen}" name="tenKhachHang">
                     </div>
                     <div class="mb-3">
                         <label class="col-3">ID Hoa don</label>
@@ -108,10 +110,10 @@
                     </div>
                     <div>
                         <button class="btn btn-primary">Tạo hoá đơn</button>
+                        <a id="thanhToan" class="btn btn-success" href="/ban-hang/thanhToan?idHD=${hoaDonByID.id}" onclick="handleClick()">Thanh Toan</a>
                     </div>
                 </div>
             </form>
-            <button class="btn btn-primary">Thanh toán</button>
         </div>
     </div>
     <%--    --------------------------------------------------------------------------------------------------------------%>
@@ -160,7 +162,7 @@
                     <td>${spct.soLuongTon}</td>
                     <td>${spct.trangThai}</td>
                     <td>
-                        <button class="btn btn-primary">Chọn mua</button>
+                        <a class="btn btn-primary" href="/ban-hang/themMoiSanPham?idSpct=${spct.id}&idHD=${hoaDonByID.id}">Chon</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -168,5 +170,6 @@
         </table>
     </div>
 </div>
+<script src="/views/js/jsMain.js"></script>
 </body>
 </html>
