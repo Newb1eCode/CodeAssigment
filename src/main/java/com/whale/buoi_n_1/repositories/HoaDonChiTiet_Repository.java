@@ -4,7 +4,6 @@ import com.whale.buoi_n_1.Utils.HibernateUtil;
 import com.whale.buoi_n_1.entities.HoaDonChiTiet;
 import org.hibernate.Session;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class HoaDonChiTiet_Repository {
@@ -27,4 +26,53 @@ public class HoaDonChiTiet_Repository {
         return listHoaDonCT;
     }
 
+    public HoaDonChiTiet findByIdSpct(int idSpct, int idHD) {
+        String query = "From HoaDonChiTiet WHERE sanPhamChiTiet.id = :idSpct AND hoaDon.id = :idHD";
+        HoaDonChiTiet listHoaDonCT = (HoaDonChiTiet) session.createQuery(query)
+                .setParameter("idSpct", idSpct)
+                .setParameter("idHD", idHD)
+                .getSingleResult();
+        return listHoaDonCT;
+    }
+
+    public HoaDonChiTiet findById(int id) {
+        String query = "From HoaDonChiTiet WHERE id = :id";
+        HoaDonChiTiet listHoaDonCT = (HoaDonChiTiet) session.createQuery(query)
+                .setParameter("id", id)
+                .getSingleResult();
+        return listHoaDonCT;
+    }
+
+    public void createHdct(HoaDonChiTiet newHdct){
+        try {
+            session.getTransaction().begin();
+            session.persist(newHdct);
+            session.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+    }
+
+    public void updateHdct(HoaDonChiTiet newHdct){
+        try {
+            session.getTransaction().begin();
+            session.merge(newHdct);
+            session.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+    }
+
+    public void deleteHdct(HoaDonChiTiet oldHdct){
+        try {
+            session.getTransaction().begin();
+            session.remove(oldHdct);
+            session.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+    }
 }
