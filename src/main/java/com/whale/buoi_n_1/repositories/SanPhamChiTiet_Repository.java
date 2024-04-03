@@ -20,12 +20,18 @@ public class SanPhamChiTiet_Repository {
         return query.getResultList();
     }
 
-    public List<SanPhamChiTiet> findById (int id){
+    public List<SanPhamChiTiet> findByIdSPAndIdHD(int id){
         List<SanPhamChiTiet> listSpCTById = (List<SanPhamChiTiet>)
                 session.createQuery("from SanPhamChiTiet where sanPham.id = :id_1")
                     .setParameter("id_1", id).list();
 
         return listSpCTById;
+    }
+
+    public SanPhamChiTiet findById(int id){
+        SanPhamChiTiet value = (SanPhamChiTiet) session.createQuery("from SanPhamChiTiet where id = :id_1")
+                .setParameter("id_1", id).getSingleResult();
+        return value;
     }
 
     public List<SanPhamChiTiet> findByTrangThai() {
@@ -34,10 +40,10 @@ public class SanPhamChiTiet_Repository {
         return listSpCTById;
     }
 
-    public void createSpct (SanPhamChiTiet newSpct){
+    public void updateSpct (SanPhamChiTiet newSpct){
         try {
             session.getTransaction().begin();
-            session.persist(newSpct);
+            session.merge(newSpct);
             session.getTransaction().commit();
         } catch (Exception e){
             e.printStackTrace();
